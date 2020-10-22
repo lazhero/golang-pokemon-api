@@ -3,13 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"pokemon-api/database"
-	"strings"
-
-	"github.com/gorilla/mux"
 )
 
 func getAllPokemons(w http.ResponseWriter, r *http.Request) {
@@ -20,28 +18,22 @@ func handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
 	myRouter.Use(commonMiddleware)
 	myRouter.HandleFunc("/pokemons", getAllPokemons).Methods("GET")
-	myRouter.HandleFunc("/pokemons", addNewPokemon).Methods("POST")
+	myRouter.HandleFunc("/addNewPokemon", addNewPokemon).Methods("POST")
 	log.Fatal(http.ListenAndServe(":10000", myRouter))
 }
 
 func addNewPokemon(w http.ResponseWriter, r *http.Request) {
-
-	reqBody, _ := ioutil.ReadAll(r.Body) //lee la vara
-	var newPokemon database.Pokemon
-	json.Unmarshal(reqBody, &newPokemon) //guardo la informacion del body en el newpokemon
-	canIaddThis := true
+	requestBody,_ := ioutil.ReadAll(r.Body)
+	var pokemon database.Pokemon
+	json.Unmarshal(requestBody, &pokemon)
 	for i := 0; i < len(database.PokemonDb); i++ {
-		fmt.Println(database.PokemonDb[i].ID)
-		if strings.Compare(database.PokemonDb[i].ID, newPokemon.ID) == 1 {
-			canIaddThis = false
+		if database.PokemonDb[i].ID == pokemon.ID {
+			w.WriteHeader(http.StatusNotModified)
+			return
 		}
-
 	}
-	if canIaddThis {
-		database.PokemonDb = append(database.PokemonDb, newPokemon) //localmente, a mi array le agrego este compa
-		json.NewEncoder(w).Encode(newPokemon)                       //agrego el compa al array
-	}
-
+	database.PokemonDb = append(database.PokemonDb, pokemon)
+	w.WriteHeader(http.StatusOK)
 }
 func commonMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
