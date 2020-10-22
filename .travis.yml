@@ -7,9 +7,9 @@ deploy:
   app: pokemontengoqueatraparlos
 addons:
   sonarcloud:
-    organization: "lazhero"
+    organization: lazhero
     token:
       secure: QzhWupKs12OxVmTHAUYfspEgOkUQBaLJzmtmhPQz+ZVts4P9jFu613pGVwFdDNqmQN71ANT0j/By3akLjEHD67CdUwLMzeGWNpMr+95l0PfC/VUHAuYlyRLDL8n31D0w1G8xfopfsyXHGdbLUS0XR2kI2ViOekFeYI7PV7P9EHrQ6XClm1eY0fsBh8LtlPl+1Z+Wa5wrfFYo9/GsWvGKl6QApPWy9PFCqI5XA4gneFtSJ9z7TFPAOo34OJ3tshPBLhNnf5UZZgZd1TzCc4aUI/wipgtCGWoSsJ/9RJ7EKjIZ3+QG6dpW0RGaIIEn09jLxYO8VbF6cdtwl/tsiBaLBU/rBAVWix+it5ZXuHGWaIEKMGMP4HGN5ofRp06bjRLU0lh/6fdPQ6etVQ0K//CfJ9o0Dr/2maa6zn6rn/Iuw58O6ntPd20vm8/TQRcg8haxU4bKzkfON5BhEfcdaxlANCjmSKj+ZhcJcAHbol9K+FF5Wn5ee2Bej0yIf5QX4AK+PPOOemu8A2EAB+t3zJIeTC+zd7I4f+oXwUgubuVJble33L2k93gvHyUhJlPumfPratkfeQN6WC1CEerN0JUPzGWFGEEmEyE0Cd52WGh7rw8GnnnTfyIolMlCnQ/qzjxJ+d398xJOCs4HbKI5chjkNQYyeFAttgPeM+vlYpRCmAU=
 script:
   # other script steps might be done before running the actual analysis
-  - sonar-scanner
+  -sonar-scanner
