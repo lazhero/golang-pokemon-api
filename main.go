@@ -25,9 +25,13 @@ func handleRequests() {
 func addNewPokemon(w http.ResponseWriter, r *http.Request) {
 	requestBody,_ := ioutil.ReadAll(r.Body)
 	var pokemon database.Pokemon
-	json.Unmarshal(requestBody, &pokemon)
+	err := json.Unmarshal(requestBody, &pokemon)
+	if err==nil{
+		w.WriteHeader(http.StatusBadRequest)
+	}
 	for i := 0; i < len(database.PokemonDb); i++ {
 		if database.PokemonDb[i].ID == pokemon.ID {
+
 			w.WriteHeader(http.StatusNotModified)
 			return
 		}

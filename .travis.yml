@@ -1,6 +1,6 @@
 language: go
 env: GO111MODULE=on
-dist: trusty
+dist: xenial
 deploy:
   provider: heroku
   api_key:
