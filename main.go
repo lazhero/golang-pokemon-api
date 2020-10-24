@@ -34,6 +34,16 @@ func addNewPokemon(w http.ResponseWriter, r *http.Request) {
 func getAllPokemons(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(database.PokemonDb)
 }
+func isIn(id string) bool {
+
+	for i := 0; i < len(database.PokemonDb); i++ {
+		if database.PokemonDb[i].ID == id {
+			return true
+		}
+
+	}
+	return false
+}
 
 func handleRequests() {
 	port := os.Getenv("PORT")
